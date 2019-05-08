@@ -1,0 +1,17 @@
+*.class
+*.log
+cs-rest-client/.gradle/
+cs-rest-client/.idea/encodings.xml
+cs-rest-client/.idea/
+cs-rest-client/build/
+cs-rest-client/out/production/resources/log4j2.xml
+cs-rest-server/.openapi-generator-ignore
+cs-rest-server/.gradle/
+cs-rest-server/.idea/
+cs-rest-server/.openapi-generator/VERSION
+cs-rest-server/build/
+cs-rest-server/out/
+cs-soap-client/.gradle/
+cs-soap-client/.idea/
+cs-soap-client/build/
+cs-soap-client/out/

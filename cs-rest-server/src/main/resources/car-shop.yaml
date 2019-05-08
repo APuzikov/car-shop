@@ -1,0 +1,170 @@
+openapi: "3.0.0"
+
+info:
+  title: car shop rest server
+  description: server part of the car shop application
+  version: 1.0
+
+servers:
+- url: localhost:8081/api
+
+paths:
+  /orders:
+    get:
+      summary: return a list of orders.
+      description: return a list of all existing orders
+      operationId: getOrders
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderDTO'
+        400:
+          description: BAD REQUEST
+    post:
+      summary: create a new order
+      description: creating a new order
+      operationId: createOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderDTO'
+      responses:
+        201:
+          description: CREATED
+        400:
+          description: BAD REQUEST
+        500:
+          description: INTERNAL ERROR
+
+  /orders/{id}:
+    put:
+      summary: update order status
+      description: order status updating
+      operationId: updateOrderStatus
+      parameters:
+        - name: id
+          in: path
+          description: order id
+          required: true
+          schema:
+            type: long
+        - name: status
+          in: query
+          description: new order status
+          required: true
+          schema:
+            $ref: '#/components/schemas/Status'
+      responses:
+        200:
+          description: OK
+        400:
+          description: BAD REQUEST
+        500:
+          description: INTERNAL ERROR
+    get:
+      summary: get order
+      description: getting order by id
+      operationId: getOrderById
+      parameters:
+        - name: id
+          in: path
+          description: order id
+          required: true
+          schema:
+            type: long
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderDTO'
+        400:
+          description: BAD REQUEST
+        500:
+          description: INTERNAL ERROR
+    delete:
+      summary: delete order
+      description: order removal by id
+      operationId: deleteOrderById
+      parameters:
+        - name: id
+          in: path
+          description: order id
+          required: true
+          schema:
+            type: long
+      responses:
+        200:
+          description: OK
+        400:
+          description: BAD REQUEST
+        500:
+          description: INTERNAL ERROR
+
+  /orders/status:
+    get:
+      summary: get orders
+      description: getting of orders by customer id and status
+      operationId: getOrdersByCustomerIdAndStatus
+      parameters:
+        - name: customerId
+          in: query
+          description: customer id
+          required: true
+          schema:
+            type: long
+        - name: status
+          in: query
+          description: order status
+          required: true
+          schema:
+            $ref: '#/components/schemas/Status'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderDTO'
+        500:
+          description: INTERNAL ERROR
+
+components:
+  schemas:
+    OrderDTO:
+      type: object
+      properties:
+        id:
+          type: long
+          example: 1
+        carId:
+          type: long
+          example: 1
+        customerId:
+          type: long
+          example: 1
+        status:
+          type: string
+          example: ACCEPTED
+        date:
+          type: string
+          example: 2019-04-03 13:06:51.260
+    Status:
+      type: string
+      enum:
+        - ACCEPTED
+        - INPROGRESS
+        - CANCELLED
+        - COMPLETED
+
+
